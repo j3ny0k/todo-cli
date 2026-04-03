@@ -1,6 +1,20 @@
-help = ('add', 'show', 'done', 'delete', 'exit', 'help')
+import json
 
-tasks = []
+def save_tasks(tasks):
+    with open ('tasks.json', 'w') as f:
+        json.dump(tasks, f)
+
+def load_tasks():
+    try:
+        with open('tasks.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+tasks = load_tasks()
+print(f'loaded {len(tasks)} tasks')
+
+commands = ('add', 'show', 'done', 'delete', 'exit', 'help')
 
 def input_num():
     while True:
@@ -38,6 +52,8 @@ def add():
         'done': False
     })
 
+    save_tasks(tasks)
+
 def show():
     if not tasks:
         print('no tasks')
@@ -58,9 +74,13 @@ def done():
     if num is None:
         return
 
-    tasks[num-1]['done'] = True
+    tasks[num-1]['done'] = not tasks[num-1]['done']
+    save_tasks(tasks)
 
-    print('task marked as done')
+    if tasks[num-1]['done']:
+        print('task marked as done')
+    else:
+        print('task marked as not done')
 
 def delete():
     num = input_num()
@@ -69,6 +89,8 @@ def delete():
         return
 
     del tasks[num-1]
+
+    save_tasks(tasks)
 
     print('task deleted')
 
@@ -82,11 +104,11 @@ while True:
         continue
 
     elif command == 'help':
-        print('allowed commands:', ', '.join(help))
+        print('allowed commands:', ', '.join(commands))
 
-    elif command not in help:
+    elif command not in commands:
         print('invalid command:', command)
-        print('available:', ', '.join(help))
+        print('available:', ', '.join(commands))
 
     if command == 'exit':
         break
