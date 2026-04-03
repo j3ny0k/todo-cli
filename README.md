@@ -6,7 +6,8 @@ Simple CLI app to manage tasks.
 
 - add task
 - show tasks
-- mark task as done
+- toggle task done / undone
+- tasks are saved to file
 - delete task
 - input validation
 - invalid task number handling
@@ -76,12 +77,24 @@ task deleted
 
 Exit the program.
 
+### help
+
+Show available commands.
+
 ---
 
 ## Notes
 
-- data is stored in memory (resets after restart)
+- tasks are saved in `tasks.json`
+- tasks stay after restart
+- `tasks.json` is local data (not pushed to GitHub)
 - task number must be an integer
 - empty input is handled
 - invalid task number is handled
 - no tasks case is handled
+
+---
+
+## Note
+
+This project was later integrated into a larger project: life-cli, where tasks and expenses are combined into a single CLI application.
