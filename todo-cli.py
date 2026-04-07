@@ -1,126 +1,131 @@
 import json
 
+
 def save_tasks(tasks):
-    with open ('tasks.json', 'w') as f:
+    with open("tasks.json", "w") as f:
         json.dump(tasks, f)
+
 
 def load_tasks():
     try:
-        with open('tasks.json', 'r') as f:
+        with open("tasks.json", "r") as f:
             return json.load(f)
     except FileNotFoundError:
         return []
 
-tasks = load_tasks()
-print(f'loaded {len(tasks)} tasks')
 
-commands = ('add', 'show', 'done', 'delete', 'exit', 'help')
+tasks = load_tasks()
+print(f"loaded {len(tasks)} tasks")
+
+commands = ("add", "show", "done", "delete", "exit", "help")
+
 
 def input_num():
     while True:
         try:
-            num_str = input('\ntask num: ')
+            num_str = input("\ntask num: ")
             if not num_str:
-                print('input is empty')
+                print("input is empty")
                 continue
             num = int(num_str)
         except ValueError:
-            print('only integers allowed')
+            print("only integers allowed")
             continue
-        break
 
-    if not tasks:
-        print('no tasks')
-        return
+        if not tasks:
+            print("no tasks")
+            return
 
-    if num < 1 or num > len(tasks):
-        print('invalid task number')
-        return
-    
-    return num
+        if num < 1 or num > len(tasks):
+            print("invalid task number")
+            continue
 
-def add():
+        return num
+
+
+def add_task():
     while True:
-        title = input('\ntask: ')
+        title = input("\ntask: ")
         if not title:
-            print('input is empty')
+            print("input is empty")
             continue
         break
 
-    tasks.append({
-        'title': title,
-        'done': False
-    })
+    tasks.append({"title": title, "done": False})
 
     save_tasks(tasks)
 
-def show():
+
+def show_tasks():
     if not tasks:
-        print('no tasks')
+        print("no tasks")
         return
 
     num = 1
     for task in tasks:
-        if task['done']:
-            done = '[x]'
+        if task["done"]:
+            done = "[x]"
         else:
-            done = '[ ]'
-        print(str(num) + '.', done, task['title'])
+            done = "[ ]"
+        print(f"{num}. {done} {task['title']}")
         num += 1
 
-def done():
+
+def done_task():
     num = input_num()
 
     if num is None:
         return
 
-    tasks[num-1]['done'] = not tasks[num-1]['done']
+    tasks[num - 1]["done"] = not tasks[num - 1]["done"]
     save_tasks(tasks)
 
-    if tasks[num-1]['done']:
-        print('task marked as done')
+    if tasks[num - 1]["done"]:
+        print("task marked as done")
     else:
-        print('task marked as not done')
+        print("task marked as not done")
 
-def delete():
+
+def delete_task():
     num = input_num()
 
     if num is None:
         return
 
-    del tasks[num-1]
+    del tasks[num - 1]
 
     save_tasks(tasks)
 
-    print('task deleted')
+    print("task deleted")
+
 
 print('type "help" to show commands')
 
 while True:
-    command = input('\ncommand: ')
+    command = input("\ncommand: ")
 
     if not command:
-        print('input is empty')
+        print("input is empty")
         continue
 
-    elif command == 'help':
-        print('allowed commands:', ', '.join(commands))
+    elif command == "help":
+        print("allowed commands:", ", ".join(commands))
 
     elif command not in commands:
-        print('invalid command:', command)
-        print('available:', ', '.join(commands))
+        print("invalid command:", command)
+        print("available:", ", ".join(commands))
 
-    if command == 'exit':
+    if command == "exit":
         break
 
-    elif command == 'add':
-        add()
+    elif command == "add":
+        add_task()
 
-    elif command == 'show':
-        show()
+    elif command == "show":
+        show_tasks()
 
-    elif command == 'done':
-        done()
+    elif command == "done":
+        done_task()
 
-    elif command == 'delete':
-        delete()
+    elif command == "delete":
+        delete_task()

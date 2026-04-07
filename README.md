@@ -77,6 +77,10 @@ task deleted
 
 Exit the program.
 
+### help
+
+Show available commands.
+
 ---
 
 ## Notes
