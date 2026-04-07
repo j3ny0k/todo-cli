@@ -15,7 +15,7 @@ def load_tasks():
 
 
 tasks = load_tasks()
-print(f"loaded {len(tasks)} tasks")
+print(f"loaded {len(tasks)} tasks\n")
 
 commands = ("add", "show", "done", "delete", "exit", "help")
 
