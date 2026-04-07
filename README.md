@@ -92,3 +92,9 @@ Show available commands.
 - empty input is handled
 - invalid task number is handled
 - no tasks case is handled
+
+---
+
+## Note
+
+This project was later integrated into a larger project: life-cli, where tasks and expenses are combined into a single CLI application.
