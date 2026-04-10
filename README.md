@@ -6,6 +6,7 @@ Simple CLI app to manage tasks.
 
 - add task
 - show tasks
+- find tasks by text
 - toggle task done / undone
 - tasks are saved to file
 - delete task
@@ -38,6 +39,8 @@ command: add
 task: buy bread
 ```
 
+---
+
 ### show
 
 Show all tasks.
@@ -48,6 +51,31 @@ Example:
 1. [ ] buy bread
 2. [x] go gym
 ```
+
+---
+
+### find
+
+Find tasks by text.
+
+Example:
+
+```text
+command: find
+find: buy
+1. [ ] buy bread
+3. [x] buy laptop
+```
+
+If nothing is found:
+
+```text
+command: find
+find: xyz
+not found
+```
+
+---
 
 ### done
 
@@ -61,6 +89,8 @@ task num: 1
 task marked as done
 ```
 
+---
+
 ### delete
 
 Delete a task by number.
@@ -73,9 +103,13 @@ task num: 2
 task deleted
 ```
 
+---
+
 ### exit
 
 Exit the program.
+
+---
 
 ### help
 
@@ -92,6 +126,7 @@ Show available commands.
 - empty input is handled
 - invalid task number is handled
 - no tasks case is handled
+- find is case-insensitive
 
 ---
 
