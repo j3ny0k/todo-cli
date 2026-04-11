@@ -20,6 +20,12 @@ tasks = load_tasks()
 commands = ("add", "show", "find", "done", "delete", "exit", "help")
 
 
+def print_task(num, task):
+    done = "[x]" if task["done"] else "[ ]"
+
+    print(f"{num}. {done} {task['title']}")
+
+
 def input_num():
     while True:
         try:
@@ -52,16 +58,8 @@ def show_tasks():
         print("no tasks")
         return
 
-    num = 1
-
-    for task in tasks:
-        if task["done"]:
-            done = "[x]"
-        else:
-            done = "[ ]"
-
-        print(f"{num}. {done} {task['title']}")
-        num += 1
+    for num, task in enumerate(tasks, 1):
+        print_task(num, task)
 
 
 def find_task():
@@ -71,13 +69,7 @@ def find_task():
     for num, task in enumerate(tasks, 1):
         if find in task["title"].lower():
 
-            if task["done"]:
-                done = "[x]"
-            else:
-                done = "[ ]"
-
-            print(f"{num}. {done} {task['title']}")
-
+            print_task(num, task)
             found = True
 
     if not found:
