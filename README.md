@@ -56,15 +56,38 @@ Example:
 
 ### find
 
-Find tasks by text.
+Find tasks by text or by status.
 
-Example:
+You can use:
+
+- any text → search in task title
+- `done` → show only completed tasks
+- `notdone` → show only not completed tasks
+
+Example (text search):
 
 ```text
 command: find
 find: buy
 1. [ ] buy bread
 3. [x] buy laptop
+```
+
+Example (`done`):
+
+```text
+command: find
+find: done
+2. [x] go gym
+3. [x] buy laptop
+```
+
+Example (`notdone`):
+
+```text
+command: find
+find: notdone
+1. [ ] buy bread
 ```
 
 If nothing is found:

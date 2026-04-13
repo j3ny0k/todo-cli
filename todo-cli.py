@@ -22,7 +22,6 @@ commands = ("add", "show", "find", "done", "delete", "exit", "help")
 
 def print_task(num, task):
     done = "[x]" if task["done"] else "[ ]"
-
     print(f"{num}. {done} {task['title']}")
 
 
@@ -67,13 +66,23 @@ def find_task():
     found = False
 
     for num, task in enumerate(tasks, 1):
-        if find in task["title"].lower():
+        if find == "done":
+            if task["done"]:
+                print_task(num, task)
+                found = True
+                
 
+        elif find == "notdone":
+            if not task["done"]:
+                print_task(num, task)
+                found = True
+
+        elif find in task["title"].lower():
             print_task(num, task)
             found = True
 
     if not found:
-        print(f"not found")
+        print("not found")
 
 
 def done_task():
