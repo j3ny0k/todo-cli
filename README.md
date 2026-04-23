@@ -2,14 +2,25 @@
 
 Simple CLI app to manage tasks.
 
+## Status
+
+Early learning project.
+
+This project was later integrated into `life-cli`.
+
+Main portfolio version: `life-cli`.
+
+---
+
 ## Features
 
 - add task
 - show tasks
-- find tasks by text
+- find tasks by text or status
 - toggle task done / undone
-- tasks are saved to file
+- edit task
 - delete task
+- tasks are saved to file
 - input validation
 - invalid task number handling
 - empty input handling
@@ -102,7 +113,7 @@ not found
 
 ### done
 
-Mark a task as done by number.
+Toggle task status by number.
 
 Example:
 
@@ -110,6 +121,21 @@ Example:
 command: done
 task num: 1
 task marked as done
+```
+
+---
+
+### edit
+
+Edit task text by number.
+
+Example:
+
+```text
+command: edit
+task num: 1
+new task: buy milk
+task updated
 ```
 
 ---
@@ -128,15 +154,15 @@ task deleted
 
 ---
 
-### exit
-
-Exit the program.
-
----
-
 ### help
 
 Show available commands.
+
+---
+
+### exit
+
+Exit the program.
 
 ---
 
@@ -150,9 +176,3 @@ Show available commands.
 - invalid task number is handled
 - no tasks case is handled
 - find is case-insensitive
-
----
-
-## Note
-
-This project was later integrated into a larger project: life-cli, where tasks and expenses are combined into a single CLI application.

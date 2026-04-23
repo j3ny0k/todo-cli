@@ -1,5 +1,6 @@
 import json
 from utils import input_non_empty
+from utils import input_num
 
 
 def save_tasks(tasks):
@@ -17,32 +18,12 @@ def load_tasks():
 
 tasks = load_tasks()
 
-commands = ("add", "show", "find", "done", "delete", "exit", "help")
+commands = ("add", "show", "find", "done", "delete", "edit", "help", "exit")
 
 
 def print_task(num, task):
     done = "[x]" if task["done"] else "[ ]"
     print(f"{num}. {done} {task['title']}")
-
-
-def input_num():
-    while True:
-        try:
-            num_str = input_non_empty("\ntask num: ")
-            num = int(num_str)
-        except ValueError:
-            print("only integers allowed")
-            continue
-
-        if not tasks:
-            print("no tasks")
-            return
-
-        if num < 1 or num > len(tasks):
-            print("invalid task number")
-            continue
-
-        return num
 
 
 def add_task():
@@ -62,6 +43,10 @@ def show_tasks():
 
 
 def find_task():
+    if not tasks:
+        print("no tasks")
+        return
+
     find = input_non_empty("\nfind: ").lower()
     found = False
 
@@ -70,7 +55,6 @@ def find_task():
             if task["done"]:
                 print_task(num, task)
                 found = True
-                
 
         elif find == "notdone":
             if not task["done"]:
@@ -86,7 +70,11 @@ def find_task():
 
 
 def done_task():
-    num = input_num()
+    if not tasks:
+        print("no tasks")
+        return
+
+    num = input_num(tasks, "task")
 
     if num is None:
         return
@@ -100,8 +88,33 @@ def done_task():
         print("task marked as not done")
 
 
+def edit_task():
+    if not tasks:
+        print("no tasks")
+        return
+
+    num = input_num(tasks, "task")
+
+    if num is None:
+        return
+
+    print_task(num, tasks[num - 1])
+
+    new_task = input_non_empty("\nnew task: ")
+
+    tasks[num - 1]["title"] = new_task
+
+    print("task updated")
+
+    save_tasks(tasks)
+
+
 def delete_task():
-    num = input_num()
+    if not tasks:
+        print("no tasks")
+        return
+
+    num = input_num(tasks, "task")
 
     if num is None:
         return
@@ -116,20 +129,14 @@ def delete_task():
 def main_tasks():
     print(f"loaded {len(tasks)} tasks")
     print()
-    print('type "help" to show commands')
+    print("type help to show commands")
 
     while True:
         command = input_non_empty("\ncommand: ").lower()
 
-        if command == "help":
-            print("allowed commands:", ", ".join(commands))
-
-        elif command not in commands:
+        if command not in commands:
             print("invalid command:", command)
             print("available:", ", ".join(commands))
-
-        if command == "exit":
-            break
 
         elif command == "add":
             add_task()
@@ -143,8 +150,17 @@ def main_tasks():
         elif command == "done":
             done_task()
 
+        elif command == "edit":
+            edit_task()
+
         elif command == "delete":
             delete_task()
+
+        elif command == "help":
+            print("allowed commands:", ", ".join(commands))
+
+        elif command == "exit":
+            break
 
 
 if __name__ == "__main__":
